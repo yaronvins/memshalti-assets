@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אשראי מתגלגל — כמה החוב עולה באמת</title>
+<div class="wrap" dir="rtl" lang="he">
+
+  <style>
+    :root{
+      --ground:#F4F1EA; --card:#FFFFFF; --card-2:#FBF9F4;
+      --ink:#1B2430; --ink-soft:#4A5666; --ink-faint:#7A8698;
+      --line:#E4DED2; --line-strong:#D2C9B8;
+      --brand:#183A44; --brand-soft:#2C5C68;
+      --amber:#C4611A; --amber-soft:#E4A45C; --amber-wash:#F6E4CF;
+      --teal:#0E8E7C; --teal-wash:#D6EDE8;
+      --shadow:0 1px 2px rgba(24,58,68,.06),0 12px 34px -18px rgba(24,58,68,.28);
+    }
+    @media (prefers-color-scheme:dark){
+      :root{
+        --ground:#0F1319; --card:#171D26; --card-2:#1B222C;
+        --ink:#EAF0F2; --ink-soft:#A6B2BF; --ink-faint:#6C7A88;
+        --line:#28313D; --line-strong:#34404E;
+        --brand:#5FD0C0; --brand-soft:#8FE0D4;
+        --amber:#E68A3C; --amber-soft:#C4611A; --amber-wash:#3A2A18;
+        --teal:#2FC0AB; --teal-wash:#123029;
+        --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 44px -22px rgba(0,0,0,.7);
+      }
+    }
+    :root[data-theme="light"]{
+      --ground:#F4F1EA; --card:#FFFFFF; --card-2:#FBF9F4;
+      --ink:#1B2430; --ink-soft:#4A5666; --ink-faint:#7A8698;
+      --line:#E4DED2; --line-strong:#D2C9B8;
+      --brand:#183A44; --brand-soft:#2C5C68;
+      --amber:#C4611A; --amber-soft:#E4A45C; --amber-wash:#F6E4CF;
+      --teal:#0E8E7C; --teal-wash:#D6EDE8;
+      --shadow:0 1px 2px rgba(24,58,68,.06),0 12px 34px -18px rgba(24,58,68,.28);
+    }
+    :root[data-theme="dark"]{
+      --ground:#0F1319; --card:#171D26; --card-2:#1B222C;
+      --ink:#EAF0F2; --ink-soft:#A6B2BF; --ink-faint:#6C7A88;
+      --line:#28313D; --line-strong:#34404E;
+      --brand:#5FD0C0; --brand-soft:#8FE0D4;
+      --amber:#E68A3C; --amber-soft:#C4611A; --amber-wash:#3A2A18;
+      --teal:#2FC0AB; --teal-wash:#123029;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 44px -22px rgba(0,0,0,.7);
+    }
+
+    *{box-sizing:border-box}
+    .wrap{
+      font-family:"Segoe UI",Rubik,Arial,sans-serif;
+      background:var(--ground); color:var(--ink);
+      line-height:1.65; padding:clamp(18px,4vw,52px) 0 64px;
+      min-height:100%;
+    }
+    .col{width:min(720px,92vw); margin-inline:auto}
+    .col-wide{width:min(880px,94vw); margin-inline:auto}
+
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:.74rem; font-weight:700; letter-spacing:.04em;
+      color:var(--amber);
+      background:var(--amber-wash); padding:6px 12px; border-radius:999px;
+    }
+    h1{
+      font-size:clamp(1.9rem,5.6vw,3.15rem); line-height:1.08;
+      font-weight:800; letter-spacing:-.015em; text-wrap:balance;
+      margin:.5em 0 .3em;
+    }
+    h1 .hl{color:var(--amber)}
+    .lede{font-size:clamp(1.05rem,2.4vw,1.22rem); color:var(--ink-soft); text-wrap:pretty; max-width:60ch}
+    .cta{font-weight:600; color:var(--brand-soft); margin-top:14px; font-size:1.02rem}
+
+    .rule{height:1px; background:var(--line); border:0; margin:38px 0}
+
+    .calc{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:20px; box-shadow:var(--shadow);
+      padding:clamp(20px,3.4vw,34px); margin-top:30px;
+      overflow:hidden;
+    }
+    .calc-head{margin-bottom:20px}
+    .calc-head h2{font-size:1.4rem; font-weight:800; letter-spacing:-.01em; margin:0}
+
+    .controls{display:grid; grid-template-columns:1fr 1fr; gap:18px 26px}
+    @media (max-width:560px){.controls{grid-template-columns:1fr}}
+    .field label{display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:.86rem; font-weight:600; color:var(--ink-soft); margin-bottom:8px}
+    .field label .val{font-size:1.02rem; font-weight:800; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
+    input[type=range]{
+      -webkit-appearance:none; appearance:none; width:100%; height:6px;
+      border-radius:999px; background:var(--line-strong); outline:none; cursor:pointer;
+    }
+    input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%;
+      background:var(--brand); border:3px solid var(--card); box-shadow:0 2px 6px rgba(0,0,0,.25); cursor:pointer;
+    }
+    input[type=range]::-moz-range-thumb{
+      width:22px; height:22px; border-radius:50%; background:var(--brand); border:3px solid var(--card); cursor:pointer;
+    }
+    input[type=range]:focus-visible{box-shadow:0 0 0 3px var(--teal-wash)}
+    .field .hint{font-size:.76rem; color:var(--ink-faint); margin-top:7px}
+
+    .verdict{
+      margin-top:26px; border-radius:16px; padding:18px 20px;
+      background:var(--amber-wash); border:1px solid var(--amber-soft);
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    .verdict.ok{background:var(--teal-wash); border-color:var(--teal)}
+    .verdict .ico{font-size:1.5rem; line-height:1}
+    .verdict .txt{font-size:1.02rem; color:var(--ink)}
+    .verdict .txt b{color:var(--amber)}
+    .verdict.ok .txt b{color:var(--teal)}
+
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:22px}
+    @media (max-width:560px){.stats{grid-template-columns:1fr}}
+    .stat{background:var(--card-2); border:1px solid var(--line); border-radius:14px; padding:16px}
+    .stat .k{font-size:.82rem; color:var(--ink-faint); font-weight:600; margin-bottom:8px; line-height:1.35}
+    .stat .v{font-size:1.7rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1.1}
+    .stat.cost .v{color:var(--amber)}
+
+    .chart-wrap{margin-top:26px}
+    .chart-legend{display:flex; gap:18px; flex-wrap:wrap; font-size:.82rem; color:var(--ink-soft); margin-bottom:10px}
+    .chart-legend span{display:inline-flex; align-items:center; gap:7px}
+    .dot{width:11px; height:11px; border-radius:3px; display:inline-block}
+    canvas{width:100%; height:auto; display:block}
+
+    .save-note{
+      margin-top:20px; font-size:.97rem; color:var(--ink-soft);
+      background:var(--card-2); border:1px dashed var(--line-strong);
+      border-radius:12px; padding:14px 16px;
+    }
+    .save-note b{color:var(--teal); font-variant-numeric:tabular-nums}
+
+    .body h3{font-size:1.32rem; font-weight:800; letter-spacing:-.01em; margin:34px 0 12px}
+    .body p{color:var(--ink-soft); margin:0 0 14px}
+    .body p strong{color:var(--ink)}
+    .steps{list-style:none; padding:0; margin:8px 0 0; display:grid; gap:12px}
+    .steps li{display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
+    .steps .n{flex:0 0 auto; width:30px; height:30px; border-radius:9px; background:var(--brand); color:var(--card); font-weight:800; display:grid; place-items:center; font-size:.95rem}
+    .steps .t{font-size:.99rem}
+    .steps .t b{color:var(--ink)}
+
+    footer{margin-top:44px; padding-top:22px; border-top:1px solid var(--line); font-size:.84rem; color:var(--ink-faint)}
+    footer .src{color:var(--ink-soft)}
+
+    @media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+    .stat .v,.verdict{transition:color .25s ease, background .25s ease, border-color .25s ease}
+  </style>
+
+  <div class="col">
+    <span class="eyebrow">מדריך לצרכן</span>
+    <h1>אשראי מתגלגל: הלוואה <span class="hl">שקל לקחת</span> אבל קשה לסגור</h1>
+    <p class="lede">בכרטיס "מתגלגל" אתם יכולים לבחור לא לשלם את כל החיוב החודשי בבת אחת, אלא לדחות חלק ממנו לפעם אחרת. זה אולי נראה נוח, אבל הכסף שדחיתם צובר ריבית גבוהה בכל חודש מחדש.</p>
+    <p class="cta">הזיזו את המחוונים וגלו איך גובה התשלום משנה את התמונה.</p>
+  </div>
+
+  <div class="col-wide">
+    <div class="calc">
+      <div class="calc-head">
+        <h2>בואו נראה כמה החוב עולה באמת</h2>
+      </div>
+
+      <div class="controls">
+        <div class="field">
+          <label for="bal">כמה כסף עוד נשאר לכם לשלם <span class="val" id="balV">₪12,000</span></label>
+          <input type="range" id="bal" min="2000" max="60000" step="500" value="12000">
+          <div class="hint">זהו סכום הכסף שבחרתם לדחות ולא לשלם בחיוב הקרוב.</div>
+        </div>
+        <div class="field">
+          <label for="rate">המחיר שאתם משלמים על הדחייה <span class="val" id="rateV">13%</span></label>
+          <input type="range" id="rate" min="4" max="18" step="0.5" value="13">
+          <div class="hint">זכרו שהריבית באשראי מתגלגל היא לרוב גבוהה יחסית.</div>
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label for="pay">הסכום שאתם מחזירים בכל חודש <span class="val" id="payV">₪600</span></label>
+          <input type="range" id="pay" min="150" max="4000" step="50" value="600">
+          <div class="hint">ככל שתשלמו יותר בכל חודש, כך החוב שלכם ייסגר מהר יותר.</div>
+        </div>
+      </div>
+
+      <div class="verdict" id="verdict">
+        <span class="ico" id="vIco">⚠️</span>
+        <span class="txt" id="vTxt"></span>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="k">תוך כמה זמן תסיימו לשלם?</div>
+          <div class="v" id="sMonths">—</div>
+        </div>
+        <div class="stat cost">
+          <div class="k">כמה כסף תשלמו רק על הריבית?</div>
+          <div class="v" id="sInterest">—</div>
+        </div>
+        <div class="stat">
+          <div class="k">כמה כסף תחזירו בסך הכל?</div>
+          <div class="v" id="sTotal">—</div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-legend">
+          <span><i class="dot" style="background:var(--amber)"></i> המצב עכשיו</span>
+          <span><i class="dot" style="background:var(--teal)"></i> אם תוסיפו קצת לתשלום</span>
+        </div>
+        <canvas id="chart" width="820" height="260" role="img" aria-label="גרף ירידת החוב לאורך הזמן"></canvas>
+      </div>
+
+      <div class="save-note" id="saveNote"></div>
+    </div>
+  </div>
+
+  <div class="col body">
+    <hr class="rule">
+    <h3>המלכודת שמסתתרת בתשלום הקטן</h3>
+    <p>כשמשלמים רק את ה"מינימום", רוב הכסף הולך לכיסוי הריבית והחוב המקורי כמעט לא קטן. הריבית על הכרטיס הזה בדרך כלל גבוהה יותר מהריבית על הלוואה רגילה שתקחו בבנק.</p>
+
+    <h3>שלוש דרכים פשוטות לחסוך כסף</h3>
+    <ol class="steps">
+      <li><span class="n">1</span><span class="t"><b>תשלמו יותר מהמינימום.</b> הגדלת התשלום החודשי תקצר את משך החוב ותהפוך אותו להרבה יותר זול.</span></li>
+      <li><span class="n">2</span><span class="t"><b>תחליפו את החוב בהלוואה.</b> מומלץ לבקש מהבנק להמיר את יתרת הכרטיס להלוואה רגילה בריבית נמוכה יותר.</span></li>
+      <li><span class="n">3</span><span class="t"><b>תבדקו את "תעודת הזהות הבנקאית".</b> בדקו בדוח השנתי כמה ריבית אתם באמת משלמים והשוו בין הבנקים.</span></li>
+    </ol>
+
+    <footer>
+      <p class="src">המידע מבוסס על הנחיות והסברי בנק ישראל לצרכן.</p>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var bal=document.getElementById('bal'), rate=document.getElementById('rate'), pay=document.getElementById('pay');
+  var balV=document.getElementById('balV'), rateV=document.getElementById('rateV'), payV=document.getElementById('payV');
+  var sMonths=document.getElementById('sMonths'), sInterest=document.getElementById('sInterest'), sTotal=document.getElementById('sTotal');
+  var verdict=document.getElementById('verdict'), vIco=document.getElementById('vIco'), vTxt=document.getElementById('vTxt');
+  var saveNote=document.getElementById('saveNote');
+  var cv=document.getElementById('chart'), ctx=cv.getContext('2d');
+
+  function shekel(n){ return '₪'+Math.round(n).toLocaleString('en-US'); }
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+  function sim(balance, annualPct, payment){
+    var mr = annualPct/100/12, b=balance, m=0, ti=0, series=[balance];
+    if(payment <= b*mr + 0.5){ return {never:true, months:Infinity, interest:Infinity, series:series}; }
+    while(b>0 && m<1200){
+      var interest=b*mr; ti+=interest;
+      b = b + interest - payment;
+      if(b<0){ b=0; }
+      m++; series.push(b>0?b:0);
+    }
+    return {never:false, months:m, interest:ti, series:series};
+  }
+
+  function monthsLabel(m){
+    if(m===Infinity) return '—';
+    var y=Math.floor(m/12), r=m%12, out=[];
+    if(y) out.push(y+' '+(y===1?'שנה':'שנים'));
+    if(r) out.push(r+' '+(r===1?'חודש':'חודשים'));
+    return out.join(' ו-')||'0 חודשים';
+  }
+
+  function drawChart(sA, sB){
+    var dpr=window.devicePixelRatio||1, w=cv.clientWidth, h=260;
+    cv.width=w*dpr; cv.height=h*dpr; cv.style.height=h+'px'; ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    var padL=8, padR=8, padT=14, padB=22;
+    var maxLen=Math.max(sA.length, sB.length, 2);
+    var maxVal=Math.max(sA[0]||1, sB[0]||1);
+    function X(i){ return w-padR - (i/(maxLen-1))*(w-padL-padR); }
+    function Y(v){ return padT + (1 - v/maxVal)*(h-padT-padB); }
+    ctx.strokeStyle=css('--line-strong'); ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padL, Y(0)); ctx.lineTo(w-padR, Y(0)); ctx.stroke();
+    function curve(s, color){
+      if(s.length<2) return;
+      ctx.beginPath();
+      for(var i=0;i<s.length;i++){ var x=X(i), y=Y(s[i]); i?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+      ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.stroke();
+    }
+    var amber=css('--amber'), teal=css('--teal');
+    curve(sB, teal);
+    curve(sA, amber);
+    function dot(s,color){ if(s.length<1)return; ctx.fillStyle=color; ctx.beginPath(); ctx.arc(X(s.length-1),Y(s[s.length-1]),3.5,0,7); ctx.fill(); }
+    dot(sB,teal); dot(sA,amber);
+  }
+
+  function update(){
+    var B=+bal.value, R=+rate.value, P=+pay.value;
+    balV.textContent=shekel(B); rateV.textContent=R+'%'; payV.textContent=shekel(P);
+
+    var a=sim(B,R,P);
+    var b=sim(B,R,P+200);
+
+    if(a.never){
+      verdict.className='verdict';
+      vIco.textContent='⛔';
+      vTxt.innerHTML='אזהרה: התשלום שלכם לא מכסה אפילו את הריבית, לכן החוב רק יגדל ולא ייסגר לעולם.';
+      sMonths.textContent='—'; sInterest.textContent='—'; sTotal.textContent='—';
+      drawChart(a.series.slice(0,60), b.never?b.series.slice(0,60):b.series);
+      saveNote.style.display='none';
+      return;
+    }
+
+    verdict.className = a.months>60 ? 'verdict' : 'verdict ok';
+    vIco.textContent = a.months>60 ? '⚠️' : '✅';
+    vTxt.innerHTML='בקצב הזה ייקח לכם <b>'+monthsLabel(a.months)+'</b> כדי לסגור את החוב ותשלמו ריבית מצטברת של <b>'+shekel(a.interest)+'</b>.';
+
+    sMonths.innerHTML=monthsLabel(a.months);
+    sInterest.textContent=shekel(a.interest);
+    sTotal.textContent=shekel(B+a.interest);
+
+    drawChart(a.series, b.series);
+
+    var savedInterest=a.interest-b.interest, savedMonths=a.months-b.months;
+    if(!b.never && (savedInterest>1 || savedMonths>0)){
+      saveNote.style.display='';
+      saveNote.innerHTML='אם תגדילו קצת את התשלום, תסיימו עם החוב תוך <b>'+monthsLabel(b.months)+'</b> ותחסכו לעצמכם <b>'+shekel(savedInterest)+'</b>.';
+    } else {
+      saveNote.style.display='none';
+    }
+  }
+
+  [bal,rate,pay].forEach(function(el){ el.addEventListener('input',update); });
+  window.addEventListener('resize',update);
+  update();
+})();
+</script>
+
+</html>
